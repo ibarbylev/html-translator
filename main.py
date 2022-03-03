@@ -5,13 +5,14 @@ import requests
 
 def translated(text):
     """
-    Function translate text
+    The function must translate the text parameter into translation_text.
     """
     translated_text = text
     return translated_text
 
 
 URL = 'http://it4each.com'
+
 html = requests.get(URL).text
 
 count = 0
@@ -58,7 +59,8 @@ for idx in range(len(html_list)):
 
 # HTML code recovery
 html_recovery = ''
+for item in html_list:
+    html_recovery += item
 
 
-
-
+# html_recovery - translated html code
