@@ -3,14 +3,23 @@ from pprint import pprint
 import requests
 
 
-html = requests.get('http://it4each.com').text
+def translated(text):
+    """
+    Function translate text
+    """
+    translated_text = text
+    return translated_text
+
+
+URL = 'http://it4each.com'
+html = requests.get(URL).text
 
 count = 0
 count_text = 0
 idx_last = 0
 html_list = []
 i = 0
-while len(html) > i:
+for i in range(len(html)):
     if html[i] == '<':
         count += 1
 
@@ -36,10 +45,20 @@ while len(html) > i:
         if count == 0:
             count_text += 1
 
-    i += 1
 
-# print(html_list)
-
-for item in html_list:
+for idx in range(len(html_list)):
+    item = html_list[idx]
     if not ('<' in item or '>' in item):
-        print(item.strip())
+        if item.strip():
+            print(item.strip())
+            # In this point we've got text.
+            # And we can translate it with function translated()
+            # And replace text in item to translated_text
+            html_list[idx] = translated(item)
+
+# HTML code recovery
+html_recovery = ''
+
+
+
+
