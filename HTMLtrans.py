@@ -1,6 +1,8 @@
 """
 With this code, you can translate the text of an HTML page into 107 languages
 (see the list in the "language.py" file).
+The source language is determined automatically, but it can also be specified explicitly.
+
 HTML can be retrieved either by specifying the URL, or by passing the HTML code as a text string.
 
 The code examples you can see below.
@@ -18,20 +20,42 @@ class HTMLTranslator:
         self.html = ''
         self.html_as_list = []
 
-    def get_html_from_url(self, url):
+    def get_html_from_url(self, url) -> None:
+        """
+        The method retrieve HTML from specified url.
+        The result is stored in the self.html attribute
+        :param url: web address
+        """
         r = requests.get(url)
         if r.status_code == 200:
             self.html = r.text
         else:
             raise ValueError(f"Can't HTML code from {url}")
 
-    def get_html_as_str(self, html_text: str):
+    def get_html_as_str(self, html_text: str) -> None:
+        """
+        By this method You can set HTML as string.
+        The result is stored in the self.html attribute
+        :param html_text: html as string
+        """
         if isinstance(html_text, str):
             self.html = html_text
         else:
             raise ValueError('Type of <html_text> must be string!!!')
 
-    def translate(self):
+    def translate(self) -> None:
+        """
+        The main method of the class. Before calling the method,
+        you must call the method for getting the HTML code.
+        (get_html_from_url() or get_html_as_str()).
+
+        The method itself calls 3 separate methods in sequence:
+            - a way to create a list from html code;
+            - a method for optimizing and translating text blocks from this list;
+            - and a way to restore html code from the list.
+
+        The result is stored in the self.html attribute
+        """
         self._split_html()
         self._translate_text_items()
         self._collect_list_into_html()
@@ -39,6 +63,8 @@ class HTMLTranslator:
     def _split_html(self):
         """
         The method splits the HTML code into tags and saves the result in the self.html_as_list.
+        The result is stored in the self.html_as_list attribute
+
         """
         count = 0
         count_text = 0
@@ -73,7 +99,7 @@ class HTMLTranslator:
     def _translate_text_items(self):
         """
         Method finds text items in self.html_as_list and translates them.
-        The result is also saved in self.html_as_list.
+        The result is stored in the self.html_as_list attribute
         """
         translator = Translator()
         for idx in range(len(self.html_as_list)):
@@ -96,7 +122,7 @@ class HTMLTranslator:
         """
         The method again recovery HTML-code:
         collects tags and translated text from self.html_as_list into html.
-        The result is saved in self.html.
+        The result is stored in the self.html attribute
         """
         html_recovery = ''
         for item in self.html_as_list:

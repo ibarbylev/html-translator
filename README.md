@@ -1,6 +1,7 @@
 # html-translator
 
 This script can translate the text of an HTML page into 107 languages (see the list in the "language.py" file).
+The source language is determined automatically, but it can also be specified explicitly. 
 HTML can be retrieved either by specifying the URL, or by passing the HTML code as a text string.
 
 The code works according to the following algorithm:
@@ -29,19 +30,19 @@ You must first install the packages:
 
 ## Example 2
 ### In the example below we get html as string and translate it to Spain.
-    ```
+```
     HTML = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Заголовок страницы</title>
-                </head>
-                <body>
-                    Привет <br> мир!
-                </body>
-                </html>
-            """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Заголовок страницы</title>
+            </head>
+            <body>
+                Привет <br> мир!
+            </body>
+            </html>
+        """
     tr = HTMLTranslator('es')
     tr.get_html_as_str(HTML)
     tr.translate()
