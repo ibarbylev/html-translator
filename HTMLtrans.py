@@ -79,6 +79,7 @@ class HTMLTranslator:
                     chunk = self.html[idx_last:i]
                     self.html_as_list.append(chunk)
                     idx_last = i
+                    count_text = 0
 
             elif self.html[i] == '>':
                 count -= 1
@@ -95,6 +96,12 @@ class HTMLTranslator:
             else:
                 if count == 0:
                     count_text += 1
+
+        if count_text > 0:
+            chunk = self.html[idx_last:len(self.html)-1]
+            self.html_as_list.append(chunk)
+            idx_last = i
+            count_text = 0
 
     def _translate_text_items(self):
         """
